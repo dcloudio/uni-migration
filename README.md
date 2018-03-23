@@ -9,3 +9,4 @@
 ## 使用
 
     $ uni-migration [options] [weapp_dir] output_dir
+    
