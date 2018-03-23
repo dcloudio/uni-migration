@@ -8,4 +8,4 @@
     
 ## 使用
 
-uni-migration [options] [weapp_dir] output_dir
+    $ uni-migration [options] [weapp_dir] output_dir
