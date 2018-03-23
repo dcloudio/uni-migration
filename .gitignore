@@ -1,0 +1,8 @@
+lib/
+
+# Node
+node_modules/
+
+# Created by IDE
+.DS_Store
+.project

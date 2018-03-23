@@ -1,0 +1,83 @@
+{
+  "package": "com.example.demo",
+  "name": "应用名称",
+  "icon": "logo.png",
+  "versionName": "",
+  "versionCode": 1,
+  "minPlatformVersion": 100,
+  "features": [
+    {
+      "name": "system.share"
+    }, {
+      "name": "system.prompt"
+    }, {
+      "name": "system.webview"
+    }, {
+      "name": "system.notification"
+    }, {
+      "name": "system.vibrator"
+    }, {
+      "name": "system.request"
+    }, {
+      "name": "system.fetch"
+    }, {
+      "name": "system.storage"
+    }, {
+      "name": "system.file"
+    }, {
+      "name": "system.barcode"
+    }, {
+      "name": "system.sensor"
+    }, {
+      "name": "system.clipboard"
+    }, {
+      "name": "system.geolocation"
+    }, {
+      "name": "system.shortcut"
+    }, {
+      "name": "system.calendar"
+    }, {
+      "name": "system.network"
+    }, {
+      "name": "system.device"
+    }, {
+      "name": "system.media"
+    }, {
+      "name": "service.push"
+    }, {
+      "name": "service.pay"
+    }, {
+      "name": "service.wxpay",
+      "params": {}
+    }, {
+      "name": "service.alipay"
+    }, {
+      "name": "service.share",
+      "params": {}
+    }
+  ],
+  "permissions": [
+    {
+      "origin": "*"
+    }
+  ],
+  "config": {
+    "logLevel": "log",
+    "designWidth": 750,
+    "data": {}
+  },
+  "router": {
+    "entry": "",
+    "pages": {}
+  },
+  "display": {
+    "backgroundColor": "#ffffff",
+    "fullScreen": false,
+    "titleBar": true,
+    "titleBarBackgroundColor": "",
+    "titleBarTextColor": "",
+    "titleBarText": "",
+    "menu": false,
+    "pages": {}
+  }
+}

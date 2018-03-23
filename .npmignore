@@ -1,0 +1,22 @@
+src/
+
+# Node
+node_modules/
+
+# Test
+test/
+
+# Tools
+tools/
+
+# Created by IDE
+.project
+.DS_Store
+.eslintrc
+.eslintignore
+
+
+# Other
+/packer.js
+rollup.config.js
+yarn.lock
