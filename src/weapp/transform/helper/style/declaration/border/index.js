@@ -30,9 +30,8 @@ export default {
   'border-radius': (value, declaration, addDeclaration) => { // width也不支持百分数，后期在转换
     if (~value.indexOf('%')) {
       value = 7.50 * parseInt(value) + 'px'
+      declaration.value = value
     }
-    addDeclaration('border-radius', value)
-    return 'I:'
   },
   'border-top': (value, declaration, addDeclaration) => {
     return setStyle('top', value, addDeclaration)
