@@ -1,7 +1,10 @@
 import path from 'path'
 import fs from 'fs-extra'
 
-import { normalizePath } from '../../../utils'
+import rewriteScript from '../page-rewriter/script-rewriter'
+
+import { logError, normalizePath } from '../../../utils'
+
 const ext = ['.wxml', '.wxss']
 export default function rewriter (input, out, ignoreFiles, dir, options) {
   dir = dir || '.'
@@ -14,7 +17,24 @@ export default function rewriter (input, out, ignoreFiles, dir, options) {
         if (path.extname(filePath) === '.wxs') {
           file = file.replace('.wxs', options.ext.wxs)
         }
-        fs.copySync(filePath, path.join(out, dir, file))
+        // js,njs
+        if (~['.js', '.njs'].indexOf(path.extname(file))) {
+          const scriptRet = rewriteScript(fs.readFileSync(filePath, 'utf-8'), '', options)
+          logError(scriptRet.logs, filePath)
+          if (scriptRet.result) {
+            fs.outputFileSync(scriptRet.result, path.join(out, dir, file), {
+              override: true
+            })
+          } else {
+            logError([{
+              reason: 'E:js转换失败',
+              line: 1,
+              column: 1
+            }], filePath)
+          }
+        } else {
+          fs.copySync(filePath, path.join(out, dir, file))
+        }
       }
     } else {
       rewriter(input, out, ignoreFiles, relativePath, options)
