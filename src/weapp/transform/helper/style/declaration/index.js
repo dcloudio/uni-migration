@@ -5,7 +5,7 @@ import {
   processDeclarationValue
 } from '../util'
 
-const declarations = {}
+export const declarations = {}
 
 !(function parse (dir) {
   dir = dir || '.'

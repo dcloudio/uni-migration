@@ -29,15 +29,16 @@ export const getDeclarationValue = (property, rule) => {
 const defaultFontSize = 32
 
 const processDeclarationValueUnit = v => {
-  if (~v.indexOf('rpx')) {
-    return v.replace('rpx', 'px')
-  } else if (~v.indexOf('px')) {
-    const numberV = parseFloat(v)
+  const lowerCaseV = v.toLowerCase()
+  if (~lowerCaseV.indexOf('rpx')) {
+    return lowerCaseV.replace('rpx', 'px')
+  } else if (~lowerCaseV.indexOf('px')) {
+    const numberV = parseFloat(lowerCaseV)
     if (!isNaN(numberV)) {
       return numberV * 2 + 'px'
     }
-  } else if (~v.indexOf('em')) {
-    const numberV = parseFloat(v)
+  } else if (~lowerCaseV.indexOf('em')) {
+    const numberV = parseFloat(lowerCaseV)
     if (!isNaN(numberV)) {
       return numberV * defaultFontSize + 'px'
     }

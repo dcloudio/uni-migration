@@ -71,7 +71,7 @@ export default function Base (options, {
       })
     }
   }
-
+  const onLoad = options.onLoad
   options.onInit = function () {
     this._$path$_ = path
     // 初始化wxs
@@ -87,7 +87,7 @@ export default function Base (options, {
     })
     this.data = data
 
-    isFn(options.onLoad) && options.onLoad.call(this)
+    isFn(onLoad) && onLoad.call(this, {})
   }
 
   const onShow = options.onShow
