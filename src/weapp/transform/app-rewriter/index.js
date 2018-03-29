@@ -24,6 +24,11 @@ require('./dcloud_stat.js');`
   const appCode = `require('./polyfill.js');
 ${options.stat && statCode || ''}  
 `
+  if (options.target === 'uniapp') {
+    return `${appCode}
+${ret.code}
+  `
+  }
   return `
 <script>
 ${appCode}
