@@ -21,11 +21,25 @@ export default function rewriter (rule, output) {
   const selectors = rule.selectors.map(selector => rewriteSelector(selector, rule, output)).filter(v => !!v)
 
   if (!selectors.length) {
+    let commentCssCode = ''
+    try {
+      commentCssCode = css.stringify({
+        stylesheet: {
+          rules: [rule]
+        }
+      })
+    } catch (e) {
+      output.logs.push({
+        reason: 'E:wxss转换失败',
+        line: rule.position.start.line,
+        column: rule.position.start.column
+      })
+    }
     return {
       type: 'comment',
       comment: `
 ${comment('unsupported selector', 'http://ask.dcloud.net.cn/article/13170')}
-${css.stringify({ stylesheet: { rules: [rule] }})}
+${commentCssCode}
 `
     }
   }
