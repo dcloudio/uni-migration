@@ -1,13 +1,22 @@
 export default {
   'flex': (value, declaration, addDeclaration) => {
-    // TODO 处理缩写时，第三个参数写为auto的情况。
-    if (~value.indexOf('auto')) {
+    const props = ['grow', 'shrink', 'basis']
+    if (value.match(/\s+/g)) {
+      const values = value.split(' ')
+      values.forEach((item, index) => {
+        // flex-basis的值不支持设置为auto，且只支持具体的数值，差异过大暂时忽略。
+        if (props[index] !== 'basis') {
+          addDeclaration('flex-' + props[index], item)
+        }
+      })
       return 'I:'
+    } else {
+      return ''
     }
   },
   'flex-grow': '',
   'flex-shrink': '',
-  'flex-basis': '',
+  'flex-basis': 'I:',
   'flex-direction': (value, declaration, addDeclaration) => {
     if (~value.indexOf('row-reverse')) {
       return 'I:'
