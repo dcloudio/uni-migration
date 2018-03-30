@@ -17,7 +17,9 @@ const walk = (node, codePagePath, ret, options, fs) => {
     return true
   } else if (name === 'import') { // import存储并删除
     node.attributes.src && ret.imports.push({
+      name: node.attributes.name || '',
       src: resolvePath(dirname, node.attributes.src, options.input),
+      template: !!node.attributes.template,
       location: node.location
     })
     return true

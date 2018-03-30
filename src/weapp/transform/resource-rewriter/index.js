@@ -22,7 +22,7 @@ export default function rewriter (input, out, ignoreFiles, dir, options) {
           const scriptRet = rewriteScript(fs.readFileSync(filePath, 'utf-8'), '', options)
           logError(scriptRet.logs, filePath)
           if (scriptRet.result) {
-            fs.outputFileSync(scriptRet.result, path.join(out, dir, file), {
+            fs.outputFileSync(path.join(out, dir, file), scriptRet.result, {
               override: true
             })
           } else {

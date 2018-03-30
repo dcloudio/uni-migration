@@ -27,21 +27,24 @@ const processTemplates = (templates, importDeps, views, pagePath, options, fs) =
     nodes,
     location
   }) => {
+    let importPagePath = pagePath
     if (length > 1 || views.length) {
-      pagePath = pagePath.replace('.wxml', '-' + name + '.wxml')
+      importPagePath = importPagePath.replace('.wxml', '-' + name + '.wxml')
     }
-
-    // <template name="a"/>检测注入import
+    // 根据所在页面的import注入template定义中
     importDeps.forEach(({
       name,
       src
-    }) => addImport(name, normalizePath(relativePath(path.join(pagePath, '..'), src)), nodes))
+    }) => addImport(name, normalizePath(relativePath(path.join(importPagePath, '..'), src)), nodes))
 
+    const importSrc = normalizePath(relativePath(path.join(importPagePath, '..'), importPagePath))
+    // 注入所在页面import
+    addImport(name, importSrc, views)
     options.location = location
-    const ret = parse(nodes, pagePath, options, fs)
+    const ret = parse(nodes, importPagePath, options, fs)
     ret.deps = [{
       name: name,
-      src: pagePath
+      src: importPagePath
     }]
     return ret
   })
@@ -49,9 +52,19 @@ const processTemplates = (templates, importDeps, views, pagePath, options, fs) =
 
 const processImports = (imports, pagePath, options, fs) => {
   return imports.map(({
+    name,
     src,
+    template,
     location
   }) => {
+    if (name && template) {
+      return {
+        deps: [{
+          name: name,
+          src: src
+        }]
+      }
+    }
     options.location = location
     return parseFile(src, pagePath, options, fs, false)
   })
@@ -70,13 +83,14 @@ const hasTemplate = (name, views) => {
   return has
 }
 
-const addImport = (name, src, views) => {
+const addImport = (name, src, views, isTemplate) => {
   if (hasTemplate(name, views)) {
     views.unshift({
       name: 'import',
       attributes: {
-        name: 'import-' + name.toLowerCase(),
-        src: src
+        name: isTemplate ? name.toLowerCase() : 'import-' + name.toLowerCase(),
+        src: src,
+        template: !!isTemplate
       },
       children: []
     })
@@ -103,10 +117,32 @@ const parseFragments = ({
     }
   })
   // 第二步:生成Template=>Component
+  // 将本页面定义的template生成import
+  const templateLength = templates.length
+  const codePageName = path.parse(codePagePath).name
+  const templateImports = templates.map(({
+    name
+  }) => {
+    return {
+      name: name,
+      src: './' + ((templateLength > 1 || views.length) ? (codePageName + '-' + name) : name) + '.wxml'
+    }
+  })
+
+  templates.forEach(({
+    nodes
+  }) => {
+    templateImports.forEach(({
+      name,
+      src
+    }) => addImport(name, src, nodes, true))
+  })
+
   processTemplates(templates, importDeps, views, codePagePath, options, fs).forEach(ret => {
     deps = deps.concat(ret.deps)
     // TODO template定义wxml是否支持wxs?
   })
+
   // 第三步:生成wxs
   wxsDeps = processWxs(wxs, codePagePath, options)
   // 第四步:生成Views

@@ -88,6 +88,9 @@ const walk = (node, usingComponents, output) => {
   Object.keys(attributes).forEach(name => {
     if (name === 'style') {
       rewriteStyle(name, attributes, output, location)
+    } else if (name === 'hidden') {
+      attributes.show = attributes.hidden.replace('{{', '{{!(').replace('}}', ')}}')
+      delete attributes['hidden']
     } else if (name.indexOf('wx:') === 0) {
       rewriteDirective(name, attributes, node, output, location)
     } else if (events.hasOwnProperty(name)) { // 全局事件

@@ -149,7 +149,7 @@ export default {
         })
         // template deps
         pageRet.deps.template.forEach(dep => {
-          const depCode = rewriteImport(dep.path, dep.nodes, options)
+          const depCode = rewriteImport(dep.path, dep.nodes, dep.imports, options)
           if (depCode) {
             fs.outputFileSync(dep.path, depCode, {
               override: true

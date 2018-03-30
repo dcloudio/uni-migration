@@ -15,7 +15,9 @@ const processInlineDeclaration = (declaration, output, location) => {
     if (typeof processDeclaration === 'function') {
       processDeclaration = processDeclaration(declaration.value, declaration, function (property, value) {
         ret.push(property + ':' + value)
-      }, {})
+      }, {
+        declarations: []
+      })
     }
     if (Array.isArray(processDeclaration)) { // 直接增加一组
       processDeclaration.forEach(declaration => {

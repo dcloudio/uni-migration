@@ -9,9 +9,11 @@ export default {
     }
     if (!node.attributes.mode || node.attributes.mode === 'selector') {
       node.attributes.mode = 'text'
-      const arr = node.attributes.range.replace(/\}|\{/ig, '')
-      const index = node.attributes.value.replace(/\}|\{/ig, '')
-      node.attributes.value = '{{' + arr + '[' + index + ']}}'
+      if (node.attributes.range && node.attributes.value) {
+        const arr = node.attributes.range.replace(/\}|\{/ig, '')
+        const index = node.attributes.value.replace(/\}|\{/ig, '')
+        node.attributes.value = '{{' + arr + '[' + index + ']}}'
+      }
     }
     if (node.attributes.mode === 'multiSelector' || node.attributes.mode === 'region') { // 这两个是不支持的，暂时这样处理把
       node.attributes.mode = 'text'
