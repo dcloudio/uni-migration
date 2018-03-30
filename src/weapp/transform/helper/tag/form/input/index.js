@@ -14,8 +14,12 @@ export default {
     if (getAttr('password') || getAttr('password') === '') {
       node.attributes.type = 'password'
     }
-    if (getAttr('type') === 'idcard' || getAttr('type') === 'digit') {
+    if (getAttr('type') === 'digit') {
       node.attributes.type = 'number'
+    }
+    // 部分身份证信息中有英文，因而不能转成数字键盘。
+    if (getAttr('type') === 'idcard') {
+      node.attributes.type = 'text'
     }
   },
   attr: {
