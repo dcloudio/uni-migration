@@ -3,6 +3,10 @@ export default {
     if (~value.indexOf('inherit')) {
       return 'I:'
     }
+    // 直接替换成px
+    if (~value.indexOf('pt')) {
+      declaration.value = declaration.value.replace('pt', 'px')
+    }
   },
   'font-weight': (value, declaration, addDeclaration) => {
     if (value === 400) {

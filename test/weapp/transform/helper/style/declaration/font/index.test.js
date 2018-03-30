@@ -11,9 +11,12 @@ describe('style.declaration.font', () => {
   font-family:serif;
   font-variant:small-caps;
 }
+.test1 {
+  font-size: 20pt;
+}
 `
 
-    const expected = `.test{font-size:40px;font-weight:bold;font-style:italic;}`
+    const expected = `.test{font-size:40px;font-weight:bold;font-style:italic;}.test1{font-size:20px;}`
 
     rewriter.assertStyleString(fixture, expected)
   })
