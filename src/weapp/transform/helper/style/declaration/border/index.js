@@ -24,7 +24,12 @@ function setStyle (direction, value, addDeclaration) {
 }
 
 export default {
-  'border': '',
+  'border': (value, declaration, addDeclaration) => {
+    if (value === 'none') {
+      declaration.value = 0
+    }
+    return ''
+  },
   'border-color': '',
   'border-style': '',
   'border-width': '',
