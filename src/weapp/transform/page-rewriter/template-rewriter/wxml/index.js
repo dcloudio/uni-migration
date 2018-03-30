@@ -73,7 +73,7 @@ const processImports = (imports, pagePath, options, fs) => {
 const hasTemplate = (name, views) => {
   let has = false
   views.every(v => {
-    if (v.name === 'template' && v.attributes && v.attributes.is === name) {
+    if (v.name === 'template' && v.attributes && v.attributes.is.toLowerCase() === name.toLowerCase()) {
       has = true
       return false
     }
