@@ -16,6 +16,10 @@ export default {
   'flex-wrap': '',
   'justify-content': (value, declaration, addDeclaration) => {
     const content = ['flex-start', 'flex-end', 'center', 'space-between']
+    if (value === 'space-around') {
+      declaration.value = 'space-between'
+      return ''
+    }
     if (~content.indexOf(value)) { // justify-content:space-around
       return ''
     }
