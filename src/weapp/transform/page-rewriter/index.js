@@ -30,10 +30,18 @@ export const parseImportWxss = (wxssPath, nssPath, options) => {
       parseImportWxss(path.join(path.join(wxssPath, '..'), dep.replace(options.ext.wxss, '.wxss')), path.join(path.join(nssPath, '..'), dep), options)
     })
     if (styleRet.result) {
-      const styleCode = css.stringify(styleRet.result)
-      fs.outputFileSync(nssPath, styleCode, {
-        override: true
-      })
+      try {
+        const styleCode = css.stringify(styleRet.result)
+        fs.outputFileSync(nssPath, styleCode, {
+          override: true
+        })
+      } catch (e) {
+        logError([{
+          reason: 'E:wxss转换失败',
+          line: 1,
+          column: 1
+        }], wxssPath)
+      }
     }
   }
 }
@@ -70,7 +78,15 @@ export default function rewriter (pagePath, importAppWxssCode, relativePath, opt
     }
     styleDeps = styleRet.deps
     if (styleRet.result) {
-      styleCode = css.stringify(styleRet.result)
+      try {
+        styleCode = css.stringify(styleRet.result)
+      } catch (e) {
+        logError([{
+          reason: 'E:wxss转换失败',
+          line: 1,
+          column: 1
+        }], pagePath + '.wxss')
+      }
     }
   }
   if (fs.existsSync(pagePath + '.js')) {
