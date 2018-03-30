@@ -68,6 +68,9 @@ const walk = (node, usingComponents, output) => {
   } else {
     node.name = component.name
   }
+  if (node.name === 'block') { // TODO 临时将block修改为div标签
+    node.name = 'div'
+  }
   node.$name = oldNodeName
   node.$deleteAttrs = {}
 
@@ -82,7 +85,11 @@ const walk = (node, usingComponents, output) => {
   }
   // TODO 仅原生组件增加class
   if (node.name !== 'template' && node.name.indexOf('import-') !== 0) {
-    rewriteClass('u-w-' + oldNodeName, node)
+    if (oldNodeName === 'block') {
+      rewriteClass('u-w-view', node)
+    } else {
+      rewriteClass('u-w-' + oldNodeName, node)
+    }
   }
 
   Object.keys(attributes).forEach(name => {

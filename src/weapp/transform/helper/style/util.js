@@ -29,6 +29,7 @@ export const getDeclarationValue = (property, rule) => {
 const defaultFontSize = 32
 
 const processDeclarationValueUnit = v => {
+  v = v.replace('!important', '')
   const lowerCaseV = v.toLowerCase()
   if (~lowerCaseV.indexOf('rpx')) {
     return lowerCaseV.replace('rpx', 'px')

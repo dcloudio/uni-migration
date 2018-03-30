@@ -1,6 +1,7 @@
 export default {
   name: 'block',
   attr: {
-    'class': 'I:'
+    'class': '',
+    'style': 'I:'
   }
 }

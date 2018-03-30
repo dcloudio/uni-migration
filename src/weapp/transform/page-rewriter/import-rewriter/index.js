@@ -31,10 +31,15 @@ ${importCode}
   export default {
     props: ['data'],
     onInit() {
-      
       this.$handleRouterEvent = _$$handleRouterEvent$$_($app_require$)
-      
-      this.data&&Object.keys(this.data).forEach(key => this.$set(key, this.data[key]))
+      this.setPropsData(this.data)
+      this.$watch('data','handlePropsData')
+    },
+    setPropsData(data){
+      data&&Object.keys(data).forEach(key => this.$set(key, data[key]))
+    },
+    handlePropsData(newVal,oldVal){
+      this.setPropsData(newVal)
     }
   }
 </script>

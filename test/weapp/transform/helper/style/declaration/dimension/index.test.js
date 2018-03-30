@@ -7,9 +7,10 @@ describe('style.declaration.dimension', () => {
 .test{
 	width:10rpx;
 	height:auto;
+	width:20rpx!important;
 }
 `
-    const expected = `.test{width:10px;display:flex;}`
+    const expected = `.test{width:10px;width:20px;display:flex;}`
 
     rewriter.assertStyleString(fixture, expected)
   })
