@@ -1,7 +1,7 @@
 export default {
   name: 'input',
   content: 'value',
-  beforeAttr(node, {
+  beforeAttr (node, {
     getAttr
   }) {
     if (~getAttr('placeholder-style', '').indexOf('color')) {
