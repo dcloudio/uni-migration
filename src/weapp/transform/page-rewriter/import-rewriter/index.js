@@ -11,7 +11,7 @@ import {
   normalizePath
 } from '../../../../utils'
 
-export default function rewriter (pagePath, nodes, imports, options) {
+export default function rewriter (pagePath, nodes, imports, styleCode, options) {
   if (!fs.existsSync(pagePath)) {
     const importTemplateCode = generateImportCode(imports, options)
     const templateCode = beautify.xml(rewriteRoot(serialize(nodes), true))
@@ -20,12 +20,14 @@ export default function rewriter (pagePath, nodes, imports, options) {
     const importCode = files.map(file => {
       return `@import '${normalizePath(relativePath(folder, path.join(options.output, file)))}';`
     }).join('\r\n')
+
     return `${importTemplateCode}
 <template>
 ${templateCode}
 </template>
 <style>
 ${importCode}
+${styleCode}
 </style>
 <script>
   export default {

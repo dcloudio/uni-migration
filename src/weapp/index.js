@@ -29,9 +29,9 @@ const getTabBarIndex = (pagePath, list) => list.findIndex(page => page.pagePath 
 
 const isEnablePullDownRefresh = (pagePath, appJson) => {
   const pageJsonEnablePullDownRefresh = appJson.page &&
-    appJson.page[pagePath] &&
-    appJson.page[pagePath].window &&
-    appJson.page[pagePath].window.enablePullDownRefresh
+        appJson.page[pagePath] &&
+        appJson.page[pagePath].window &&
+        appJson.page[pagePath].window.enablePullDownRefresh
   if (typeof pageJsonEnablePullDownRefresh === 'boolean') {
     return pageJsonEnablePullDownRefresh
   }
@@ -40,9 +40,9 @@ const isEnablePullDownRefresh = (pagePath, appJson) => {
 
 const getUsingComponents = (pagePath, appJson) => {
   const usingComponents = appJson.page &&
-    appJson.page[pagePath] &&
-    appJson.page[pagePath].window &&
-    appJson.page[pagePath].window.usingComponents
+        appJson.page[pagePath] &&
+        appJson.page[pagePath].window &&
+        appJson.page[pagePath].window.usingComponents
   if (typeof usingComponents === 'object') {
     return usingComponents
   }
@@ -149,7 +149,7 @@ export default {
         })
         // template deps
         pageRet.deps.template.forEach(dep => {
-          const depCode = rewriteImport(dep.path, dep.nodes, dep.imports, options)
+          const depCode = rewriteImport(dep.path, dep.nodes, dep.imports, pageRet.deps.styleCode, options)
           if (depCode) {
             fs.outputFileSync(dep.path, depCode, {
               override: true

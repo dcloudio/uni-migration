@@ -168,7 +168,8 @@ ${scriptCode}
     deps: {
       wxs: wxsDeps.filter(dep => !dep.src),
       style: styleDeps,
-      template: templateDeps
+      template: templateDeps,
+      styleCode: styleCode
     }
   }
 }

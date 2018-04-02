@@ -86,7 +86,7 @@ const processWx = (t, path, state) => {
         callExpression.replaceWith(createAwaitExpression(t, resultCallExpression))
         let parentPath = callExpression.parentPath
         while (parentPath) {
-          if (t.isFunctionExpression(parentPath) || t.isObjectMethod(parentPath)) {
+          if (t.isFunctionExpression(parentPath) || t.isObjectMethod(parentPath) || t.isFunctionDeclaration(parentPath)) {
             parentPath.node.async = true
             break
           }
