@@ -14,8 +14,11 @@ describe('style.declaration.flexbox', () => {
 .test2{
   flex: 0 1 50%;
 }
+.test3 {
+  flex: auto;
+}
 `
-    const expected = `.test{justify-content:space-between;justify-content:space-between;}.test1{flex-grow:1;flex-shrink:2;}.test2{flex-grow:0;flex-shrink:1;}`
+    const expected = `.test{justify-content:space-between;justify-content:space-between;}.test1{flex-grow:1;flex-shrink:2;}.test2{flex-grow:0;flex-shrink:1;}.test3{}`
 
     rewriter.assertStyleString(fixture, expected)
   })

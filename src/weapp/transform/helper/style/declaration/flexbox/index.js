@@ -10,6 +10,8 @@ export default {
         }
       })
       return 'I:'
+    } else if (value === 'auto') {
+      return 'I:'
     } else {
       return ''
     }
