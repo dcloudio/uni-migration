@@ -1,5 +1,15 @@
 export default {
   name: 'swiper', // 转换后的标签名称
+  beforeAttr (node, {
+    getAttr,
+    addAttr
+  }) {
+    // 小程序默认不显示指示点，但是快应用默认是显示的。
+    const indicator = getAttr('indicator-dots')
+    if (!indicator) {
+      addAttr('indicator-dots', false)
+    }
+  },
   attr: { // 标签属性转换配置
     'indicator-dots': 'indicator', // 将小程序swiper标签的indicator-dots属性转换为indicator
     'indicator-color': 'STYLE:indicator-color', // 将小程序swiper标签的indicator-color属性转换为style中的indicator-color
