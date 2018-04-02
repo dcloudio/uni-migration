@@ -14,7 +14,7 @@ import {
 export default function rewriter (pagePath, nodes, imports, options) {
   if (!fs.existsSync(pagePath)) {
     const importTemplateCode = generateImportCode(imports, options)
-    const templateCode = beautify.xml(rewriteRoot(serialize(nodes)))
+    const templateCode = beautify.xml(rewriteRoot(serialize(nodes), true))
     const folder = path.join(pagePath, '..')
     const files = ['polyfill' + options.ext.wxss, 'app' + options.ext.wxss]
     const importCode = files.map(file => {
