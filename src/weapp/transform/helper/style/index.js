@@ -46,7 +46,7 @@ ${commentCssCode}
   rule.selectors = selectors
   rule.declarations.forEach(declaration => declaration.type === 'declaration' && rewriteDeclaration(declaration, rule, output))
   // delete
-  output.declaration.deleted.forEach(declaration => removeDeclaration(declaration.property, rule))
+  output.declaration.deleted.forEach(declaration => removeDeclaration(declaration, rule))
   // insert declaration
   output.declaration.inserted.forEach(declaration => addDeclaration(declaration.property, declaration.value, rule))
   // insert comment(by delete)
