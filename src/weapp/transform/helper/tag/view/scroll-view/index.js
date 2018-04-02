@@ -3,14 +3,16 @@ export default {
     getAttr,
     addAttr
   }) {
-    node.children = [{
-      name: 'list-item',
-      content: node.content,
-      attributes: {
-        type: 'u-w-scroll-view-list-item'
-      },
-      children: node.children
-    }]
+    for (let i = 0, len = node.children.length; i < len; i++) {
+      node.children[i] = {
+        name: 'list-item',
+        content: node.content,
+        attributes: {
+          type: 'u-w-scroll-view-list-item-' + i
+        },
+        children: [node.children[i]]
+      }
+    }
   },
   name: 'list',
   attr: {},
