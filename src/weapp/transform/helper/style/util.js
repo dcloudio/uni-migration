@@ -2,9 +2,9 @@ import {
   comment
 } from '../../../../utils'
 /**
- * 在rule中删除指定property的declaration
+ * 在rule中删除指定declaration
  */
-export const removeDeclaration = (property, rule) => rule.declarations.splice(rule.declarations.findIndex(v => v.property === property), 1)
+export const removeDeclaration = (declaration, rule) => rule.declarations.splice(rule.declarations.findIndex(v => v.property === declaration.property && v.value === declaration.value), 1)
 /**
  * 在rule中增加一条declaration
  */
