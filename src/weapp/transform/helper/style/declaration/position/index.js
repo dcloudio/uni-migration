@@ -1,6 +1,21 @@
 import { getDeclarationValue } from '../../util'
+
+function setValue (value, declaration) {
+  const valueList = ['inherit', 'auto']
+  if (~valueList.indexOf(value)) {
+    return 'I:'
+  }
+  if (~value.indexOf('%')) {
+    value = 750 / 100 * parseInt(value) + 'px'
+    declaration.value = value
+  }
+  return ''
+}
+
 export default {
-  'bottom': '',
+  'bottom': (value, declaration, addDeclaration) => {
+    return setValue(value, declaration)
+  },
   // 'display': '',
   'display': (value, declaration, addDeclaration, rule) => {
     // TODO 暂时忽略掉不支持的情况
@@ -13,7 +28,9 @@ export default {
       }
     }
   },
-  'left': '',
+  'left': (value, declaration, addDeclaration) => {
+    return setValue(value, declaration)
+  },
   //  'position': 'I:',
   'position': (value, declaration, addDeclaration) => {
     if (value === 'static') {
@@ -22,8 +39,12 @@ export default {
       return 'I:'
     }
   },
-  'right': '',
-  'top': '',
+  'right': (value, declaration, addDeclaration) => {
+    return setValue(value, declaration)
+  },
+  'top': (value, declaration, addDeclaration) => {
+    return setValue(value, declaration)
+  },
   'overflow': 'I:',
   'vertical-align': 'I:',
   'z-index': 'I:'
