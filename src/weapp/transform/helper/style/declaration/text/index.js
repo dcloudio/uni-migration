@@ -6,9 +6,8 @@ export default {
   },
   'line-height': '',
   'text-align': (value, declaration, addDeclaration) => {
-    addDeclaration('align-items', 'center')
-    addDeclaration('justify-content', 'center')
-    if (~value.indexOf('justify')) {
+    const data = ['left', 'right', 'center']
+    if (!~data.indexOf(value)) {
       return 'I:'
     }
   },
