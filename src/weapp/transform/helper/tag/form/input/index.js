@@ -18,7 +18,7 @@ export default {
       node.attributes.type = 'number'
     }
     // 部分身份证信息中有英文，因而不能转成数字键盘。
-    if (getAttr('type') === 'idcard') {
+    if (getAttr('type') === 'idcard' || getAttr('type') === 'tel') {
       node.attributes.type = 'text'
     }
   },
