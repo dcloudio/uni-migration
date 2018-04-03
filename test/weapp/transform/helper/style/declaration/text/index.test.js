@@ -20,7 +20,7 @@ button{
 }
 `
 
-    const expected = `.u-w-button{color:#ff3333;line-height:20px;text-align:center;text-overflow:clip;lines:1;}.test{text-align:left;}`
+    const expected = `.u-w-button{color:#ff3333;line-height:20px;text-align:center;text-overflow:clip;align-items:center;justify-content:center;lines:1;}.test{text-align:left;align-items:flex-start;justify-content:flex-start;}`
 
     rewriter.assertStyleString(fixture, expected)
   })
