@@ -6,14 +6,10 @@ export default {
   },
   'line-height': '',
   'text-align': (value, declaration, addDeclaration) => {
-    const valueData = ['left', 'right', 'center']
-    const flexData = ['flex-start', 'flex-end', 'center']
-    if (!~valueData.indexOf(value)) {
+    addDeclaration('align-items', 'center')
+    addDeclaration('justify-content', 'center')
+    if (~value.indexOf('justify')) {
       return 'I:'
-    } else {
-      const index = valueData.indexOf(value)
-      addDeclaration('align-items', flexData[index])
-      addDeclaration('justify-content', flexData[index])
     }
   },
   'text-decoration': (value, declaration, addDeclaration) => {

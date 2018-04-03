@@ -69,34 +69,38 @@ const processWx = (t, path, state) => {
   const memberExpression = path.parentPath
   const callExpression = memberExpression.parentPath
   const property = path.parentPath.node.property
-  if (t.isCallExpression(callExpression) && t.isMemberExpression(memberExpression) && t.isIdentifier(property)) {
-    const methodDef = wx[property.name]
-    if (methodDef) {
-      const args = callExpression.node.arguments
+  const computed = path.parentPath.node.computed
+  if (t.isCallExpression(callExpression) && t.isMemberExpression(memberExpression)) {
+    if ((!computed && t.isIdentifier(property)) || t.isLiteral(property)) { // wx.request or wx['request']
+      const methodName = property.name || property.value
+      const methodDef = wx[methodName]
+      if (methodDef) {
+        const args = callExpression.node.arguments
 
-      const resultCallExpression = createCallExpressions[state.opts.target || 'uniapp'](t, args, {
-        state,
-        type: methodDef.type || 'module',
-        module: methodDef.module,
-        method: methodDef.method,
-        wxMethod: property.name
-      })
+        const resultCallExpression = createCallExpressions[state.opts.target || 'uniapp'](t, args, {
+          state,
+          type: methodDef.type || 'module',
+          module: methodDef.module,
+          method: methodDef.method,
+          wxMethod: methodName
+        })
 
-      if (~property.name.indexOf('Sync')) {
-        callExpression.replaceWith(createAwaitExpression(t, resultCallExpression))
-        let parentPath = callExpression.parentPath
-        while (parentPath) {
-          if (t.isFunctionExpression(parentPath) || t.isObjectMethod(parentPath) || t.isFunctionDeclaration(parentPath)) {
-            parentPath.node.async = true
-            break
+        if (~methodName.indexOf('Sync')) {
+          callExpression.replaceWith(createAwaitExpression(t, resultCallExpression))
+          let parentPath = callExpression.parentPath
+          while (parentPath) {
+            if (t.isFunctionExpression(parentPath) || t.isObjectMethod(parentPath) || t.isFunctionDeclaration(parentPath)) {
+              parentPath.node.async = true
+              break
+            }
+            parentPath = parentPath.parentPath
           }
-          parentPath = parentPath.parentPath
+        } else {
+          callExpression.replaceWith(resultCallExpression)
         }
       } else {
-        callExpression.replaceWith(resultCallExpression)
+        addComment(callExpression.parentPath, comment('unsupported api', 'http://ask.dcloud.net.cn/article/13168'))
       }
-    } else {
-      addComment(callExpression.parentPath, comment('unsupported api', 'http://ask.dcloud.net.cn/article/13168'))
     }
   }
 }

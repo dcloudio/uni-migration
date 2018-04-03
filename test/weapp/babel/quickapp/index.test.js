@@ -19,6 +19,9 @@ onShow(){
     wx.request({
       url: 'test.php' //仅为示例，并非真实的接口地址
     })
+    wx['request']({
+      url: 'test.php' //仅为示例，并非真实的接口地址
+    })
 }
 })`
 
@@ -29,6 +32,12 @@ Page({
         console.log(value);
     },
     onShow() {
+        _$fetch$_.fetch(_$$parseArgs$$_({
+            url: 'test.php' //仅为示例，并非真实的接口地址
+        }, {
+            page: 'pages/page',
+            method: 'request'
+        }));
         _$fetch$_.fetch(_$$parseArgs$$_({
             url: 'test.php' //仅为示例，并非真实的接口地址
         }, {
