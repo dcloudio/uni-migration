@@ -6,6 +6,7 @@ describe('style.declaration.border', () => {
     const fixture = `
 .test{
   border:1px solid #fff000;
+	border-bottom: none;
 }
 .test2{
 	border-top:1rpx solid red;
@@ -17,7 +18,7 @@ describe('style.declaration.border', () => {
 	border: none;
 }
 `
-    const expected = `.test{border:2px solid #fff000;}.test2{border-top-width:1px;border-style:solid;border-top-color:red;}.test3{border-radius:375px;border:0;border-left-width:0;border-right-width:0;}`
+    const expected = `.test{border:2px solid #fff000;border-bottom-width:0;}.test2{border-top-width:1px;border-style:solid;border-top-color:red;}.test3{border-radius:375px;border:0;border-left-width:0;border-right-width:0;}`
 
     rewriter.assertStyleString(fixture, expected)
   })
