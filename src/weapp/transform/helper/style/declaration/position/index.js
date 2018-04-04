@@ -31,10 +31,11 @@ export default {
   'left': (value, declaration, addDeclaration) => {
     return setValue(value, declaration)
   },
-  //  'position': 'I:',
   'position': (value, declaration, addDeclaration) => {
     if (value === 'static') {
       declaration.value = 'none'
+    } else if (value === 'absolute') {
+      return 'E:'
     } else if (value !== 'fixed') {
       return 'I:'
     }

@@ -29,7 +29,7 @@ export default {
     }
     return 'I:'
   },
-  'float': 'I:',
+  'float': 'E:',
   'content': 'I:',
   'overflow': 'I:',
   'overflow-x': 'I:',
