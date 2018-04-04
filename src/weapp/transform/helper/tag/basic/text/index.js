@@ -1,6 +1,6 @@
 export default {
   name (node) {
-    if (node.parent.name === 'text') {
+    if (node.parent && node.parent.name === 'text') {
       return 'span'
     }
     return node.name
