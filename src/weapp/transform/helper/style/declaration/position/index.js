@@ -1,6 +1,6 @@
 import { getDeclarationValue } from '../../util'
 
-function setValue(value, declaration) {
+function setValue (value, declaration) {
   const valueList = ['inherit', 'auto']
   if (~valueList.indexOf(value)) {
     return 'I:'
