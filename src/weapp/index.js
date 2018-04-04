@@ -4,6 +4,7 @@ import fs from 'fs-extra'
 import {
   info,
   error,
+  globalError,
   relativePath,
   normalizePath
 } from '../utils'
@@ -167,5 +168,8 @@ export default {
     })
     // 第六步:拷贝项目资源
     transform.resource(input, out, ignoreFiles, '.', options)
+    if (globalError.flex) {
+      error('建议你先在微信项目下修改为flex布局')
+    }
   }
 }

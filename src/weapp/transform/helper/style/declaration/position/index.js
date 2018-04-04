@@ -20,7 +20,7 @@ export default {
   'display': (value, declaration, addDeclaration, rule) => {
     // TODO 暂时忽略掉不支持的情况
     if (!~['flex', 'none'].indexOf(value)) {
-      return 'I:'
+      return 'E:'
     }
     if (value === 'flex') { // 因全局设置了flex-direction:column,故,当display:flex且未指定direction,还原为默认值row
       if (!getDeclarationValue('flex-direction', rule)) {

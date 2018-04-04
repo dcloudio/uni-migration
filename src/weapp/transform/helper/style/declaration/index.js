@@ -61,6 +61,12 @@ export default function rewriter (declaration, rule, output) {
         output.declaration.deleted.push(declaration)
       } else if (processDeclaration.indexOf('E:') === 0) { // 错误
         output.declaration.deleted.push(declaration)
+        const msg = 'E: 样式`' + declaration.property + ':' + declaration.value + '`不支持'
+        output.logs.push({
+          reason: msg,
+          line: declaration.position.start.line,
+          column: declaration.position.start.column
+        })
       }
     }
   } else {

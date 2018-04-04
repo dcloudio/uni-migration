@@ -35,11 +35,11 @@ export default function parseArgs (args, options) {
   }
   if (~['navigateTo', 'redirectTo', 'switchTab'].indexOf(options.method) && args.uri) {
     if (options.method === 'switchTab') {
-      args.uri = parseRouter(args.uri)
+      args.uri = parseRouter(args.uri).uri
     } else {
       const curPage = getCurrentPage()
       if (curPage && curPage._$path$_) {
-        args.uri = parseRouter(args.uri, curPage._$path$_)
+        args = Object.assign(args, parseRouter(args.uri, curPage._$path$_))
       }
     }
   }

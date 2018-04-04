@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 
 import {
   error,
+  globalError,
   normalizePath
 } from '../../../utils'
 
@@ -99,7 +100,11 @@ const rewritePages = (json, manifest, input) => {
         }
       }
     })
-    Object.keys(duplicate).forEach(page => error('页面目录`' + page + '`重复'))
+    const duplicateKeys = Object.keys(duplicate)
+    if (duplicateKeys.length) {
+      globalError.duplicate = true
+      duplicateKeys.forEach(page => error('页面目录`' + page + '`重复'))
+    }
   }
   return {
     manifest,

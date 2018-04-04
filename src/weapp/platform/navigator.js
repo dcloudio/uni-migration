@@ -20,19 +20,13 @@ export default function createHandleRouterEvent (/*eslint-disable camelcase*/ $a
       if (url) {
         switch (openType) {
           case 'navigate':
-            router.push({
-              uri: parseRouter(url, pagePath)
-            })
+            router.push(parseRouter(url, pagePath))
             break
           case 'redirect':
-            router.replace({
-              uri: parseRouter(url, pagePath)
-            })
+            router.replace(parseRouter(url, pagePath))
             break
           case 'switchTab':
-            router.replace({
-              uri: parseRouter(url)
-            })
+            router.replace(parseRouter(url))
             router.clear()
             break
         }

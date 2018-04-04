@@ -102,8 +102,15 @@ export default function Base (options, {
     Object.keys(data).forEach(key => {
       this.$set(key === 'data' ? 'proxyDataKey' : key, data[key])
     })
-
-    isFn(onLoad) && onLoad.call(this, {})
+    let pageQuery = {}
+    if (this.pageQuery) {
+      try {
+        pageQuery = JSON.parse(this.pageQuery)
+      } catch (e) {
+        console.error(e)
+      }
+    }
+    isFn(onLoad) && onLoad.call(this, pageQuery)
   }
 
   const onShow = options.onShow

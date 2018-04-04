@@ -1,3 +1,25 @@
+const decodeRegexp = /\+/g
+const paramRegexp = /([^&=]+)=?([^&]*)/g
+const parseParams = function (queryString) {
+  const params = {}
+  if (queryString) {
+    const queryStrings = queryString.split('?')
+    if (queryStrings.length === 2) {
+      queryString = queryStrings[1]
+    }
+  }
+  if (queryString) {
+    let e
+    /*eslint-disable no-cond-assign*/
+    while (e = paramRegexp.exec(queryString)) {
+      params[decode(e[1])] = decode(e[2])
+    }
+  }
+  return params
+}
+const decode = function (str) {
+  return decodeURIComponent(str.replace(decodeRegexp, ' '))
+}
 const absolute = (base, relative) => {
   if (relative.indexOf('/') === 0) {
     base = ''
@@ -22,8 +44,16 @@ const absolute = (base, relative) => {
 export default function parseRouter (url, base) {
   const parts = url.split('?')
   if (parts.length > 1) {
-    return absolute(base || '', parts[0]) + '?' + parts[1]
+    return {
+      uri: absolute(base || '', parts[0]),
+      params: {
+        pageQuery: parseParams(parts[1])
+      }
+    }
   } else {
-    return absolute(base || '', parts[0])
+    return {
+      uri: absolute(base || '', parts[0]),
+      params: {}
+    }
   }
 }
