@@ -20,7 +20,7 @@ export default function rewriter (code, options) {
   }
 
   if (ast && ast.type === 'stylesheet' && ast.stylesheet &&
-    ast.stylesheet.rules && ast.stylesheet.rules.length) {
+        ast.stylesheet.rules && ast.stylesheet.rules.length) {
     const rules = []
     ast.stylesheet.rules.forEach(function (rule, index) {
       const type = rule.type
@@ -36,6 +36,8 @@ export default function rewriter (code, options) {
         if (newRule) {
           rules.push(newRule)
         }
+      } else if (type === 'keyframes') {
+        rules.push(rule)
       }
     })
     ast.stylesheet.rules = rules
