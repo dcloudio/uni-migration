@@ -29,11 +29,7 @@ export default {
     }
     return 'I:'
   },
-  'float': (value, declaration, addDeclaration) => {
-    if (~['left', 'right'].indexOf(value)) {
-      return 'E:'
-    }
-  },
+  'float': 'E:',
   'content': 'I:',
   'overflow': 'I:',
   'overflow-x': 'I:',
