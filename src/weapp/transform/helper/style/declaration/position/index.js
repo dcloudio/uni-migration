@@ -1,6 +1,6 @@
 import { getDeclarationValue } from '../../util'
 
-function setValue (value, declaration) {
+function setValue(value, declaration) {
   const valueList = ['inherit', 'auto']
   if (~valueList.indexOf(value)) {
     return 'I:'
@@ -31,10 +31,11 @@ export default {
   'left': (value, declaration, addDeclaration) => {
     return setValue(value, declaration)
   },
-  //  'position': 'I:',
   'position': (value, declaration, addDeclaration) => {
     if (value === 'static') {
       declaration.value = 'none'
+    } else if (value === 'absolute') {
+      return 'E:'
     } else if (value !== 'fixed') {
       return 'I:'
     }
