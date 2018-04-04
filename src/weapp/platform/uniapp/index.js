@@ -5,18 +5,11 @@ import Component from '../Component'
 
 import parseArgs from '../args'
 
+import { fixedModuleName } from '../util'
+
 import * as polyfill from '../polyfill/index'
 
 import wx from '../wx'
-
-const serviceModules = ['push', 'pay', 'wxpay', 'alipay', 'appshare']
-
-const fixedModuleName = function (module) {
-  if (~serviceModules.indexOf(module)) {
-    return '@app-module/service.' + module
-  }
-  return '@app-module/system.' + module
-}
 
 const uni = Object.assign({}, polyfill)
 

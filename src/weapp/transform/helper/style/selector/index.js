@@ -1,3 +1,4 @@
+import cssWhat from 'css-what'
 const simpleSelectorRegex = /^[.#]?[A-Za-z0-9_\-:]+$/
 const compoundSelectorRegex = /^([.#]?[A-Za-z0-9_-]+(\s+|\s*>\s*))+([.#]?[A-Za-z0-9_\-:]+)$/
 export default function rewriter (selector, rule, output) {
@@ -17,8 +18,19 @@ export default function rewriter (selector, rule, output) {
     })
     return false
   }
-  if (!(selector.indexOf('.') === 0 || selector.indexOf('#') === 0)) { // 标签样式
-    return '.u-w-' + selector
-  }
+  selector = cssWhat(selector)[0].map(subselect => {
+    if (subselect.type === 'tag') {
+      return '.u-w-' + subselect.name
+    } else if (subselect.type === 'descendant') {
+      return ' '
+    } else if (subselect.type === 'attribute') {
+      if (subselect.name === 'class') {
+        return '.' + subselect.value
+      } else if (subselect.name === 'id') {
+        return '#' + subselect.value
+      }
+    }
+    return ''
+  }).join('')
   return selector
 }

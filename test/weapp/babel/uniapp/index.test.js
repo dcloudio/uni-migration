@@ -19,6 +19,9 @@ onShow(){
     wx.request({
       url: 'test.php' //仅为示例，并非真实的接口地址
     })
+    wx['request']({
+      url: 'test.php' //仅为示例，并非真实的接口地址
+    })
 }
 })`
 
@@ -28,6 +31,12 @@ onShow(){
         console.log(value);
     },
     onShow() {
+        uni.fetch.fetch(uni.parseArgs({
+            url: 'test.php' //仅为示例，并非真实的接口地址
+        }, {
+            page: 'pages/page',
+            method: 'request'
+        }));
         uni.fetch.fetch(uni.parseArgs({
             url: 'test.php' //仅为示例，并非真实的接口地址
         }, {

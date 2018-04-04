@@ -14,13 +14,9 @@ button{
   word-wrap: break-word;
   word-break: break-all;
 }
-.test{
-	text-align: left;
-	text-align: -webkit-match-parent;
-}
 `
 
-    const expected = `.u-w-button{color:#ff3333;line-height:20px;text-align:center;text-overflow:clip;align-items:center;justify-content:center;lines:1;}.test{text-align:left;align-items:flex-start;justify-content:flex-start;}`
+    const expected = `.u-w-button{color:#ff3333;line-height:20px;text-align:center;text-overflow:clip;align-items:center;justify-content:center;lines:1;}`
 
     rewriter.assertStyleString(fixture, expected)
   })

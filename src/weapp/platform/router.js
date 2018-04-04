@@ -1,4 +1,8 @@
 const absolute = (base, relative) => {
+  if (relative.indexOf('/') === 0) {
+    base = ''
+    relative = relative.substr(1)
+  }
   const stack = base.split('/')
   const parts = relative.split('/')
   stack.pop()

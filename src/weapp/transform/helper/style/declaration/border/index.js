@@ -26,6 +26,22 @@ function setStyle (direction, value, addDeclaration) {
   return 'I:'
 }
 
+function setWidth (value, declaration) {
+  const styles = ['thin', 'medium', 'thick', 'inherit']
+  const values = ['1px', '2px', '3px', '1px']
+  var valueList = value.split(' ')
+  value = valueList[0]
+  if (~styles.indexOf(value)) {
+    const index = styles.indexOf(value)
+    console.log(index)
+    value = values[index]
+  }
+  if (~value.indexOf('%')) {
+    value = 750 / 100 * parseInt(value) + 'px'
+  }
+  declaration.value = value
+}
+
 export default {
   'border': (value, declaration, addDeclaration) => {
     if (value === 'none') {
@@ -35,7 +51,9 @@ export default {
   },
   'border-color': '',
   'border-style': '',
-  'border-width': '',
+  'border-width': (value, declaration, addDeclaration) => { // width也不支持百分数，后期在转换
+    setWidth(value, declaration)
+  },
   'border-radius': (value, declaration, addDeclaration) => { // width也不支持百分数，后期在转换
     if (~value.indexOf('%')) {
       // 其实应当按照当前组件的宽高为基准计算，但这里拿不到，暂时这样处理下。
@@ -55,10 +73,18 @@ export default {
   'border-right': (value, declaration, addDeclaration) => {
     return setStyle('right', value, addDeclaration)
   },
-  'border-left-width': '',
-  'border-right-width': '',
-  'border-top-width': '',
-  'border-bottom-width': '',
+  'border-left-width': (value, declaration, addDeclaration) => {
+    setWidth(value, declaration)
+  },
+  'border-right-width': (value, declaration, addDeclaration) => {
+    setWidth(value, declaration)
+  },
+  'border-top-width': (value, declaration, addDeclaration) => {
+    setWidth(value, declaration)
+  },
+  'border-bottom-width': (value, declaration, addDeclaration) => {
+    setWidth(value, declaration)
+  },
   'border-left-color': '',
   'border-right-color': '',
   'border-top-color': '',

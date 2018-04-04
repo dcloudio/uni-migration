@@ -1,16 +1,24 @@
 const rewriteTabbar = (itemOptions, tabBarOptions, selected) => {
   let iconCode = ''
   let textCode = ''
+  let iconPath = itemOptions.iconPath
+  let selectedIconPath = itemOptions.selectedIconPath
+  if (iconPath && iconPath.indexOf('./') === 0) {
+    iconPath = iconPath.substr(2)
+  }
+  if (selectedIconPath && selectedIconPath.indexOf('./') === 0) {
+    selectedIconPath = selectedIconPath.substr(2)
+  }
   if (selected) {
-    if (itemOptions.selectedIconPath) {
-      iconCode = `<image class="u-w-tabbar-icon" src="/${itemOptions.selectedIconPath}"></image>`
+    if (selectedIconPath) {
+      iconCode = `<image class="u-w-tabbar-icon" src="/${selectedIconPath}"></image>`
     }
     if (itemOptions.text) {
       textCode = `<text class="u-w-tabbar-text" style="color:${tabBarOptions.selectedColor}">${itemOptions.text}</text>`
     }
   } else {
-    if (itemOptions.iconPath) {
-      iconCode = `<image class="u-w-tabbar-icon" src="/${itemOptions.iconPath}"></image>`
+    if (iconPath) {
+      iconCode = `<image class="u-w-tabbar-icon" src="/${iconPath}"></image>`
     }
     if (itemOptions.text) {
       textCode = `<text class="u-w-tabbar-text" style="color:${tabBarOptions.color}">${itemOptions.text}</text>`
