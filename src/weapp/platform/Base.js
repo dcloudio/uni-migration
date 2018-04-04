@@ -1,5 +1,4 @@
 import events from '../transform/helper/event/packer'
-import handleRichText from './richtext'
 import { isFn } from '../../utils/type'
 
 import createHandleRouterEvent from './navigator'
@@ -12,7 +11,7 @@ const handlePageRefresh = function (evt) {
 }
 
 const datasetRegex = /data([A-Z$](?:[A-Za-z_$]*))/
-const handlePageEvent = function (method, stopPropagation, capture, evt) {
+export const handlePageEvent = function (method, stopPropagation, capture, evt) {
   let detail = {}
   if (evt.target && evt.target.type) {
     const evtDef = events[evt.target.type]
@@ -42,7 +41,6 @@ const initMixin = (options, path, /*eslint-disable camelcase*/ $app_require$) =>
 }
 
 const initHelper = (options, path, /*eslint-disable camelcase*/ $app_require$) => {
-  options.$handleRichText = handleRichText // 解析richtext
   options.$handlePageEvent = handlePageEvent // 处理普通页面事件
   options.$handlePageRefresh = handlePageRefresh // 处理页面下拉刷新
   options.$handleRouterEvent = createHandleRouterEvent($app_require$, path) // 处理路由跳转
@@ -58,6 +56,9 @@ export default function Base (options, {
   $app_require$
 }) {
   initMixin(options, path, $app_require$)
+  if (type === 'Template') {
+    return
+  }
 
   options.update = function () {
     // TODO
@@ -66,11 +67,21 @@ export default function Base (options, {
   options.setData = function (data) {
     if (data) {
       Object.keys(data).forEach(key => {
-        this.data[key] = data[key]
+        if (typeof data[key] === 'undefined') {
+          this.data[key] = undefined
+        } else {
+          try {
+            this.data[key] = JSON.parse(JSON.stringify(data[key]))
+          } catch (e) {
+            console.error(e)
+            this.data[key] = data[key]
+          }
+        }
         this.$set(key === 'data' ? 'proxyDataKey' : key, data[key])
       })
     }
   }
+
   const onLoad = options.onLoad
   options.onInit = function () {
     this._$path$_ = path
@@ -82,10 +93,15 @@ export default function Base (options, {
     this.$set('pageIsRefreshing', false)
     // 初始化页面数据
     const data = this.$getPageInitData()
+    try {
+      this.data = JSON.parse(JSON.stringify(data)) // data副本
+    } catch (e) {
+      console.error(e)
+      this.data = Object.assign({}, data)
+    }
     Object.keys(data).forEach(key => {
       this.$set(key === 'data' ? 'proxyDataKey' : key, data[key])
     })
-    this.data = data
 
     isFn(onLoad) && onLoad.call(this, {})
   }

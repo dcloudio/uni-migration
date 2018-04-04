@@ -30,10 +30,9 @@ ${importCode}
 ${styleCode}
 </style>
 <script>
-  export default {
+  Template({
     props: ['data'],
     onInit() {
-      this.$handleRouterEvent = _$$handleRouterEvent$$_($app_require$)
       this.setPropsData(this.data)
       this.$watch('data','handlePropsData')
     },
@@ -43,7 +42,11 @@ ${styleCode}
     handlePropsData(newVal,oldVal){
       this.setPropsData(newVal)
     }
-  }
+  },{
+    module: module,
+    exports: exports,
+    $app_require$: $app_require$
+  })
 </script>
   `
   }
