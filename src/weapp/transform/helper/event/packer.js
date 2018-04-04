@@ -4,6 +4,7 @@ import radio from './radio/index.js'
 import slider from './slider/index.js'
 import swiper from './swiper/index.js'
 import switchEvent from './switch/index.js'
+import tabs from './tabs/index.js'
 import textarea from './textarea/index.js'
 import video from './video/index.js'
 
@@ -14,6 +15,7 @@ export default {
   slider,
   swiper,
   'switch':switchEvent,
+  tabs,
   textarea,
   video
 }
