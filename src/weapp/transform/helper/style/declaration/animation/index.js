@@ -1,3 +1,22 @@
+function setValue (index, value, addDeclaration) {
+  const keyDate = ['animation-duration', 'animation-timing-function', 'animation-delay', 'animation-iteration-count']
+  const valueData = {
+    'animation-duration': /^\d*\.?\d+(s|ms)$/,
+    'animation-timing-function': /^(linear|ease|ease-in|ease-out|ease-in-out)$/,
+    'animation-delay': /^\d*\.?\d+(s|ms)$/,
+    'animation-iteration-count': /^(infinite|\d+)$/
+  }
+  if (valueData[keyDate[index]].test(value)) {
+    addDeclaration(keyDate[index], value)
+  } else if (valueData[keyDate[1]].test(value)) {
+    addDeclaration(keyDate[1], value)
+  } else if (valueData[keyDate[3]].test(value)) {
+    addDeclaration(keyDate[3], value)
+  } else if (valueData[keyDate[0]].test(value)) {
+    addDeclaration(keyDate[0], value)
+  }
+}
+
 export default {
   'animation': (value, declaration, addDeclaration) => {
     if (~value.indexOf('steps')) {
@@ -5,44 +24,9 @@ export default {
       // console.log("不支持steps()样式");
     }
     const list = value.split(/\s+/)
-    switch (list.length) {
-      case 1:
-        addDeclaration('animation-name', list[0])
-        break
-      case 2:
-        addDeclaration('animation-name', list[0])
-        addDeclaration('animation-duration', list[1])
-        break
-      case 3:
-        addDeclaration('animation-name', list[0])
-        addDeclaration('animation-duration', list[1])
-        addDeclaration('animation-timing-function', list[2])
-        break
-      case 4:
-        addDeclaration('animation-name', list[0])
-        addDeclaration('animation-duration', list[1])
-        addDeclaration('animation-timing-function', list[2])
-        if (list[3] === 'infinite') {
-          addDeclaration('animation-iteration-count', list[3])
-        } else {
-          addDeclaration('animation-delay', list[3])
-        }
-        break
-      case 5:
-        addDeclaration('animation-name', list[0])
-        addDeclaration('animation-duration', list[1])
-        addDeclaration('animation-timing-function', list[2])
-        addDeclaration('animation-delay', list[3])
-        addDeclaration('animation-iteration-count', list[4])
-        break
-      case 6:
-        addDeclaration('animation-name', list[0])
-        addDeclaration('animation-duration', list[1])
-        addDeclaration('animation-timing-function', list[2])
-        addDeclaration('animation-delay', list[3])
-        addDeclaration('animation-iteration-count', list[4])
-        break
-      default:
+    addDeclaration('animation-name', list[0])
+    for (let i = 1, len = list.length; i < len; i++) {
+      setValue(i - 1, list[i], addDeclaration)
     }
     return 'I:'
   },
