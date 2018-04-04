@@ -1,7 +1,7 @@
 function valueType (value) {
   const styles = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset']
   // 需要考虑到0px简写为0的情况，否则会当作color处理。
-  if (/px/ig.test(value) || parseInt(value) === 0) {
+  if (/px/ig.test(value) || parseInt(value) === 0 || value === 'none') {
     return 'width'
   } else if (~styles.indexOf(value)) {
     return 'style'
@@ -14,6 +14,9 @@ function setStyle (direction, value, addDeclaration) {
   const values = value.split(' ')
   for (let i = 0, length = values.length; i < length; i++) {
     const borderProperty = `border-${direction}-${valueType(values[i])}`
+    if (values[i] === 'none') {
+      values[i] = '0'
+    }
     if (/\S+style$/.test(borderProperty)) {
       addDeclaration('border-style', values[i])
     } else {
