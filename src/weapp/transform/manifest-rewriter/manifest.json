@@ -4,7 +4,7 @@
   "icon": "logo.png",
   "versionName": "",
   "versionCode": 1,
-  "minPlatformVersion": 100,
+  "minPlatformVersion": 1000,
   "features": [
     {
       "name": "system.share"
