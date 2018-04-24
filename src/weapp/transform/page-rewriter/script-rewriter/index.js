@@ -1,17 +1,9 @@
-import { transform } from 'babel-core'
-
-import plugins from '../../../babel'
+import transform from '../../../babel/transform'
 
 export default function rewriter (code, pagePath, options) {
   const ret = transform(code, {
-    ast: false,
-    babelrc: false,
-    plugins: [
-      [plugins, {
-        page: pagePath,
-        target: options.target
-      }]
-    ]
+    page: pagePath,
+    target: options.target
   })
   return {
     logs: [],
