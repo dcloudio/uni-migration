@@ -32,7 +32,7 @@ const processInlineDeclaration = (declaration, output, location) => {
         return ret
       } else if (processDeclaration.indexOf('E:') === 0) { // 错误
         const msg = 'E: 内联样式`' + declaration.property + '`不支持`' + declaration.value + '`'
-        output.logs.push({
+        output && output.logs.push({
           reason: (processDeclaration.length === 2 ? msg : (msg + ',' + processDeclaration.replace('E:'))),
           line: location.line,
           column: location.column
