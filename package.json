@@ -8,11 +8,15 @@
     "copy": "cp ./src/weapp/transform/manifest-rewriter/manifest.json ./lib/weapp/transform/manifest-rewriter/ && cp -r ./tools/dcloud_stat/ ./lib/dcloud_stat/ && cp -r ./tools/sign/ ./lib/sign/",
     "test": "mocha ./test/**/*.test.js",
     "lint": "eslint src --fix",
+    "dev": "concurrently \"npm run watch:pack\" \"npm run watch:babel\" \"npm run watch:rollup\"",
     "build": "npm run pack && node ./node_modules/babel-cli/bin/babel.js src --out-dir lib && npm run buildplatform && npm run copy",
     "pack": "node packer.js",
     "buildplatform": "rollup -c rollup.config.js",
     "prebuild": "npm run clear && npm run lint",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "watch:pack": "node packer.js --watch",
+    "watch:babel": "node ./node_modules/babel-cli/bin/babel.js --watch src --out-dir lib",
+    "watch:rollup": "rollup --watch -c rollup.config.js"
   },
   "bin": {
     "uni-migration": "bin/uni-migration.js"
@@ -52,8 +56,7 @@
     "presets": [
       "es2015",
       [
-        "minify",
-        {
+        "minify", {
           "mangle": false
         }
       ]
