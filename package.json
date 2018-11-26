@@ -27,7 +27,7 @@
     "lib",
     "bin"
   ],
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
